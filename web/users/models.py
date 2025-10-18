@@ -7,13 +7,12 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.utils.translation import gettext_lazy as _
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     class UserManager(BaseUserManager):
-        def create_superuser(
-            self, email: str, password: str, **other_fields
-        ):
+        def create_superuser(self, email: str, password: str, **other_fields):
             other_fields.setdefault("is_staff", True)
             user = self.model(email=email, **other_fields, is_superuser=True)
             user.set_password(password)
@@ -27,11 +26,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(
         primary_key=True, default=uuid4, editable=False, db_index=True
     )
-    email = models.EmailField(_("Email"), unique=True, null=False, blank=False)
-    first_name = models.CharField(_("First name"), null=False, blank=False)
-    last_name = models.CharField(_("Last name"), null=False, blank=False)
-    created_at = models.DateTimeField(_("Registration date"), auto_now_add=True)
-    is_staff = models.BooleanField(_("Staff"), default=False)
+    email = models.EmailField(unique=True, null=False, blank=False)
+    first_name = models.CharField(null=False, blank=False)
+    last_name = models.CharField(null=False, blank=False)
+    phone = PhoneNumberField(region="PL")
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_staff = models.BooleanField(default=False)
     last_login = None
 
     class Meta:
