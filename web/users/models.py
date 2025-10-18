@@ -10,16 +10,12 @@ from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-
     class UserManager(BaseUserManager):
         def create_superuser(
             self, email: str, password: str, **other_fields
         ):
-            other_fields.setdefault("is_superuser", True)
             other_fields.setdefault("is_staff", True)
-            if other_fields["is_superuser"] is not True:
-                raise ValueError(_('Superuser"s "is_superuser" must be set to True'))
-            user = self.model(email=email, **other_fields)
+            user = self.model(email=email, **other_fields, is_superuser=True)
             user.set_password(password)
             user.save()
             return user
@@ -32,6 +28,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         primary_key=True, default=uuid4, editable=False, db_index=True
     )
     email = models.EmailField(_("Email"), unique=True, null=False, blank=False)
+    first_name = models.CharField(_("First name"), null=False, blank=False)
+    last_name = models.CharField(_("Last name"), null=False, blank=False)
     created_at = models.DateTimeField(_("Registration date"), auto_now_add=True)
     is_staff = models.BooleanField(_("Staff"), default=False)
     last_login = None
