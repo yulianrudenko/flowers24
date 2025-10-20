@@ -8,19 +8,19 @@ from flowers.models import Bouquet, Flower
 
 
 class Order(models.Model):
-    STATUS_CHOICES = [
-        ("waiting_payment", "Waiting for payment"),
-        ("paid", "Paid"),
-        ("preparing", "Preparing"),
-        ("in_delivery", "In Delivery"),
-        ("delivered", "Delivered"),
-        ("cancelled", "Cancelled"),
-    ]
+    class Status(models.TextChoices):
+        WAITING_PAYMENT = "waiting_payment", _("Waiting for payment")
+        PAID = "paid", _("Paid")
+        PREPARING = "preparing", _("Preparing")
+        IN_DELIVERY = "in_delivery", _("In Delivery")
+        DELIVERY = "delivered", _("Delivered")
+        CANCELLED = "cancelled", _("Cancelled")
 
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="waiting_payment")
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+    status = models.CharField(max_length=20, choices=Status, default=Status.WAITING_PAYMENT.value)
+    notes = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    traceback = models.TextField()
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"Order #{self.id} - {self.status}"
@@ -42,7 +42,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
     product_type = models.CharField(max_length=30, choices=ProductType)
     product_id = models.UUIDField()
-    quantity = models.PositiveIntegerField(null=False, blank=False)
+    quantity = models.PositiveIntegerField()
 
     def __str__(self):
         return f"{self.quantity} × {self.product_type} (ID {self.product_id})"
