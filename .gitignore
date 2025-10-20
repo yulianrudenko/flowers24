@@ -1,6 +1,7 @@
 *.env
-*/migrations/*
-!*/migrations/__init__.py
+**/migrations/*.py
+**/migrations/*.pyc
+!**/migrations/__init__.py
 
 
 # Byte-compiled / optimized / DLL files
