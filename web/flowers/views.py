@@ -6,7 +6,7 @@ from flowers.models import Bouquet, BouquetCategory
 class BouquetListView(ListView):
     model = Bouquet
     template_name = "bouquet_list.html"
-    context_object_name = "flowers"
+    context_object_name = "bouquets"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
