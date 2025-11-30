@@ -1,26 +1,38 @@
-from django.views.generic import DetailView, ListView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 
-from flowers.models import Bouquet, BouquetCategory
-
-
-class BouquetListView(ListView):
-    model = Bouquet
-    template_name = "bouquet_list.html"
-    context_object_name = "bouquets"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["categories"] = BouquetCategory.objects.all()
-        return context
+from flowers.models import Flower, Bouquet, BouquetCategory
+from flowers.serializers import (
+    BouquetSerializer,
+    BouquetCategorySerializer,
+    FlowerSerializer,
+)
 
 
-class BouquetCategoryDetailView(DetailView):
-    model = BouquetCategory
-    template_name = "bouquet_category_detail.html"
-    context_object_name = "category"
+class FlowerListView(ListAPIView):
+    queryset = Flower.objects.all()
+    serializer_class = FlowerSerializer
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["bouquets"] = Bouquet.objects.filter(categories=self.object)
-        context["categories"] = BouquetCategory.objects.all()
-        return context
+
+class FlowerDetailView(RetrieveAPIView):
+    queryset = Flower.objects.all()
+    serializer_class = FlowerSerializer
+
+
+class BouquetListView(ListAPIView):
+    queryset = Bouquet.objects.all()
+    serializer_class = BouquetSerializer
+
+
+class BouquetDetailView(RetrieveAPIView):
+    queryset = Bouquet.objects.all()
+    serializer_class = BouquetSerializer
+
+
+class BouquetCategoryListView(ListAPIView):
+    queryset = BouquetCategory.objects.all()
+    serializer_class = BouquetCategorySerializer
+
+
+class BouquetCategoryDetailView(RetrieveAPIView):
+    queryset = BouquetCategory.objects.all()
+    serializer_class = BouquetCategorySerializer

@@ -6,6 +6,18 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 
+def get_bouquet_img_path(instance: "Bouquet", filename: str) -> str:
+    ext = Path(filename).suffix
+    new_filename = f"{uuid4()}{ext}"
+    return str(Path("bouquets") / new_filename)
+
+
+def get_flower_img_path(instance: "Flower", filename: str) -> str:
+    ext = Path(filename).suffix
+    new_filename = f"{uuid4()}{ext}"
+    return str(Path("flowers") / new_filename)
+
+
 class BaseProduct(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid4, editable=False, db_index=True
@@ -19,12 +31,6 @@ class BaseProduct(models.Model):
         abstract = True
 
 
-def get_flower_img_path(instance: "Flower", filename: str) -> str:
-    ext = Path(filename).suffix
-    new_filename = f"{uuid4()}{ext}"
-    return str(Path('flowers') / new_filename)
-
-
 class Flower(BaseProduct):
     image = models.ImageField(upload_to=get_flower_img_path)
     in_stock = models.BooleanField(default=True)
@@ -35,24 +41,22 @@ class Flower(BaseProduct):
 
 
 class BouquetCategory(models.Model):
+    id = models.UUIDField(
+        primary_key=True, default=uuid4, editable=False, db_index=True
+    )
     name = models.CharField(max_length=60, unique=True)
-    slug = models.SlugField(max_length=60, unique=True)
+
+    bouquets: models.QuerySet["Bouquet"]
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
         verbose_name_plural = "Categories"
 
     def __str__(self):
         return f"{self.name}"
 
     def get_absolute_url(self):
-        return reverse("flowers:bouquet_category_detail", args=[self.slug])
-
-
-def get_bouquet_img_path(instance: "Bouquet", filename: str) -> str:
-    ext = Path(filename).suffix
-    new_filename = f"{uuid4()}{ext}"
-    return str(Path('bouquets') / new_filename)
+        return reverse("flowers:bouquet-category-detail", args=[self.pk])
 
 
 class Bouquet(BaseProduct):

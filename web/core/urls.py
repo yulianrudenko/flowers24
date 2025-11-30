@@ -5,9 +5,9 @@ from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("flowers.urls", namespace="flowers")),
-    path("orders/", include("orders.urls", namespace="orders")),
-    path("users/", include("users.urls", namespace="users")),
+    path("api/orders/", include("orders.urls", namespace="orders")),
+    path("api/users/", include("users.urls", namespace="users")),
+    path("api/", include("flowers.urls", namespace="flowers")),
     *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]
