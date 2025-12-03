@@ -3,37 +3,28 @@ from rest_framework import serializers
 from flowers.models import Bouquet, BouquetCategory, Flower
 
 
-class FlowerSerializer(serializers.HyperlinkedModelSerializer):
-    bouquets = serializers.HyperlinkedRelatedField(
-        many=True, read_only=True, view_name="flowers:bouquet-detail", lookup_field="pk"
-    )
-
+class FlowerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Flower
         fields = ["id", "image", "in_stock", "allowed_to_sell_as_single", "bouquets"]
 
 
-class BouquetCategorySerializer(serializers.ModelSerializer):
-    bouquet_count = serializers.SerializerMethodField()
+class BouquetSerializer(serializers.ModelSerializer):
+    class BouquetCategoryInlineSerializer(serializers.ModelSerializer):
+        bouquet_count = serializers.SerializerMethodField()
 
-    class Meta:
-        model = BouquetCategory
-        fields = "__all__"
+        class Meta:
+            model = BouquetCategory
+            fields = ["id", "name", "bouquet_count"]
 
-    def get_bouquet_count(self, obj: BouquetCategory) -> int:
-        return obj.bouquets.count()
+        def get_bouquet_count(self, obj: BouquetCategory) -> int:
+            return obj.bouquets.count()
 
-
-class BouquetSerializer(serializers.HyperlinkedModelSerializer):
-    categories = serializers.HyperlinkedRelatedField(
+    categories = BouquetCategoryInlineSerializer(
         many=True,
         read_only=True,
-        view_name="flowers:bouquet-category-detail",
-        lookup_field="pk",
     )
-    flowers = serializers.HyperlinkedRelatedField(
-        many=True, read_only=True, view_name="flowers:flower-detail", lookup_field="pk"
-    )
+    flowers = FlowerSerializer(many=True, read_only=True)
 
     class Meta:
         model = Bouquet
@@ -47,3 +38,14 @@ class BouquetSerializer(serializers.HyperlinkedModelSerializer):
             "categories",
             "flowers",
         ]
+
+
+class BouquetCategorySerializer(serializers.ModelSerializer):
+    bouquets = BouquetSerializer(
+        many=True,
+        read_only=True,
+    )
+
+    class Meta:
+        model = BouquetCategory
+        fields = ["id", "name", "bouquets"]

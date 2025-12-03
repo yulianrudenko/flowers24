@@ -19,20 +19,20 @@ class FlowerDetailView(RetrieveAPIView):
 
 
 class BouquetListView(ListAPIView):
-    queryset = Bouquet.objects.all()
+    queryset = Bouquet.objects.prefetch_related("flowers").all()
     serializer_class = BouquetSerializer
 
 
 class BouquetDetailView(RetrieveAPIView):
-    queryset = Bouquet.objects.all()
+    queryset = Bouquet.objects.prefetch_related("flowers").all()
     serializer_class = BouquetSerializer
 
 
 class BouquetCategoryListView(ListAPIView):
-    queryset = BouquetCategory.objects.all()
+    queryset = BouquetCategory.objects.prefetch_related("bouquets").all()
     serializer_class = BouquetCategorySerializer
 
 
 class BouquetCategoryDetailView(RetrieveAPIView):
-    queryset = BouquetCategory.objects.all()
+    queryset = BouquetCategory.objects.prefetch_related("bouquets").all()
     serializer_class = BouquetCategorySerializer

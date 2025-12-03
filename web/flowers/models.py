@@ -27,6 +27,8 @@ class BaseProduct(models.Model):
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    MAX_ORDER_QUANTITY: int
+
     class Meta:
         abstract = True
 
@@ -35,6 +37,8 @@ class Flower(BaseProduct):
     image = models.ImageField(upload_to=get_flower_img_path)
     in_stock = models.BooleanField(default=True)
     allowed_to_sell_as_single = models.BooleanField()
+
+    MAX_ORDER_QUANTITY = 10_000
 
     def __str__(self) -> str:
         return f"{self.name}"
@@ -65,6 +69,8 @@ class Bouquet(BaseProduct):
     flowers = models.ManyToManyField(
         Flower, through="BouquetFlower", related_name="bouquets"
     )
+
+    MAX_ORDER_QUANTITY = 50
 
     def __str__(self) -> str:
         return f"{self.name}"
