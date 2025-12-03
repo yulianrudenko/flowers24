@@ -4,16 +4,16 @@ from orders.models import Order, OrderItem
 from orders.serializers import OrderSerializer, OrderItemSerializer
 
 
-class OrderListView(ListAPIView):
+class OrderListAPIView(ListAPIView):
     queryset = Order.objects.prefetch_related("items").all()
     serializer_class = OrderSerializer
 
 
-class OrderDetailView(RetrieveAPIView):
+class OrderDetailAPIView(RetrieveAPIView):
     queryset = Order.objects.prefetch_related("items").all()
     serializer_class = OrderSerializer
 
 
-class OrderItemDetailView(RetrieveAPIView):
+class OrderItemDetailAPIView(RetrieveAPIView):
     queryset = OrderItem.objects.select_related("order").all()
     serializer_class = OrderItemSerializer

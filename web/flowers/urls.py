@@ -5,22 +5,22 @@ from flowers import views
 app_name = "flowers"
 
 urlpatterns = [
-    path("flowers", views.FlowerListView.as_view(), name="flower-list"),
+    path("flowers", views.FlowerListAPIView.as_view(), name="flower-list"),
     path(
         "flowers/<uuid:pk>/",
-        views.FlowerDetailView.as_view(),
+        views.FlowerDetailAPIView.as_view(),
         name="flower-detail",
     ),
-    path("bouquets", views.BouquetListView.as_view(), name="bouquet-list"),
+    path("bouquets", views.BouquetListAPIView.as_view(), name="bouquet-list"),
     path(
         "bouquets/<uuid:pk>/",
-        views.BouquetDetailView.as_view(),
+        views.BouquetDetailAPIView.as_view(),
         name="bouquet-detail",
     ),
-    path("categories", views.BouquetCategoryListView.as_view(), name="bouquet-category-list"),
+    path("categories", views.BouquetCategoryListAPIView.as_view(), name="bouquet-category-list"),
     path(
         "categories/<uuid:pk>/",
-        views.BouquetCategoryDetailView.as_view(),
+        views.BouquetCategoryDetailAPIView.as_view(),
         name="bouquet-category-detail",
     ),
 ]

@@ -5,15 +5,15 @@ from orders import views
 app_name = "orders"
 
 urlpatterns = [
-    path("", views.OrderListView.as_view(), name="order-list"),
+    path("", views.OrderListAPIView.as_view(), name="order-list"),
     path(
         "<uuid:pk>/",
-        views.OrderDetailView.as_view(),
+        views.OrderDetailAPIView.as_view(),
         name="order-detail",
     ),
     path(
         "<uuid:order_id>/items/<uuid:pk>/",
-        views.OrderItemDetailView.as_view(),
+        views.OrderItemDetailAPIView.as_view(),
         name="order-item-detail",
     ),
 ]

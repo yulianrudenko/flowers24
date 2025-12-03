@@ -6,6 +6,7 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin,
 )
+from django.core.validators import MinLengthValidator
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -27,9 +28,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         primary_key=True, default=uuid4, editable=False, db_index=True
     )
     email = models.EmailField(unique=True, null=False, blank=False)
-    first_name = models.CharField(null=False, blank=False)
-    last_name = models.CharField(null=False, blank=False)
-    phone = PhoneNumberField(region="PL")
+    first_name = models.CharField(null=False, blank=False, validators=[MinLengthValidator(2)])
+    last_name = models.CharField(null=False, blank=False, validators=[MinLengthValidator(2)])
+    phone = PhoneNumberField(region="PL")  # type: ignore
     created_at = models.DateTimeField(auto_now_add=True)
     is_staff = models.BooleanField(default=False)
     last_login = None

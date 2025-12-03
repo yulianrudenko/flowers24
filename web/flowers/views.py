@@ -8,31 +8,31 @@ from flowers.serializers import (
 )
 
 
-class FlowerListView(ListAPIView):
+class FlowerListAPIView(ListAPIView):
     queryset = Flower.objects.all()
     serializer_class = FlowerSerializer
 
 
-class FlowerDetailView(RetrieveAPIView):
+class FlowerDetailAPIView(RetrieveAPIView):
     queryset = Flower.objects.all()
     serializer_class = FlowerSerializer
 
 
-class BouquetListView(ListAPIView):
+class BouquetListAPIView(ListAPIView):
     queryset = Bouquet.objects.prefetch_related("flowers").all()
     serializer_class = BouquetSerializer
 
 
-class BouquetDetailView(RetrieveAPIView):
+class BouquetDetailAPIView(RetrieveAPIView):
     queryset = Bouquet.objects.prefetch_related("flowers").all()
     serializer_class = BouquetSerializer
 
 
-class BouquetCategoryListView(ListAPIView):
+class BouquetCategoryListAPIView(ListAPIView):
     queryset = BouquetCategory.objects.prefetch_related("bouquets").all()
     serializer_class = BouquetCategorySerializer
 
 
-class BouquetCategoryDetailView(RetrieveAPIView):
+class BouquetCategoryDetailAPIView(RetrieveAPIView):
     queryset = BouquetCategory.objects.prefetch_related("bouquets").all()
     serializer_class = BouquetCategorySerializer

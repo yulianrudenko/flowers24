@@ -22,7 +22,7 @@ class Order(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid4, editable=False, db_index=True
     )
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=False, null=True)
     status = models.CharField(
         max_length=20, choices=Status, default=Status.WAITING_PAYMENT.value
     )
