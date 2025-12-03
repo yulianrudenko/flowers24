@@ -40,6 +40,11 @@ class Flower(BaseProduct):
 
     MAX_ORDER_QUANTITY = 10_000
 
+    class Meta:  # type: ignore
+        verbose_name = _("Flower")
+        verbose_name_plural = _("Flowers")
+        ordering = ["-created_at"]
+
     def __str__(self) -> str:
         return f"{self.name}"
 
@@ -53,8 +58,9 @@ class BouquetCategory(models.Model):
     bouquets: models.QuerySet["Bouquet"]
 
     class Meta:
+        verbose_name = _("Category")
+        verbose_name_plural = _("Categories")
         ordering = ["name"]
-        verbose_name_plural = "Categories"
 
     def __str__(self):
         return f"{self.name}"
@@ -72,6 +78,11 @@ class Bouquet(BaseProduct):
 
     MAX_ORDER_QUANTITY = 50
 
+    class Meta:  # type: ignore
+        verbose_name = _("Bouquet")
+        verbose_name_plural = _("Bouquets")
+        ordering = ["-created_at"]
+
     def __str__(self) -> str:
         return f"{self.name}"
 
@@ -82,7 +93,10 @@ class BouquetFlower(models.Model):
     quantity = models.PositiveIntegerField(default=1)
 
     class Meta:
+        verbose_name = _("BouquetFlower")
+        verbose_name_plural = _("BouquetFlowers")
         unique_together = ["bouquet", "flower"]
+        ordering = ["bouquet"]
 
     def __str__(self):
         return f"{self.quantity} × {self.flower.name} in {self.bouquet.name}"

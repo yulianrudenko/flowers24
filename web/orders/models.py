@@ -32,6 +32,11 @@ class Order(models.Model):
 
     items: models.QuerySet["OrderItem"]
 
+    class Meta:
+        verbose_name = _("Order")
+        verbose_name_plural = _("Order")
+        ordering = ["-created_at", "-updated_at"]
+
     def __str__(self):
         return f"Order {self.id} - {self.status}"
 
@@ -45,6 +50,9 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
+    id = models.UUIDField(
+        primary_key=True, default=uuid4, editable=False, db_index=True
+    )
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
     flower = models.ForeignKey(Flower, null=True, blank=True, on_delete=models.SET_NULL)
     bouquet = models.ForeignKey(
@@ -53,6 +61,17 @@ class OrderItem(models.Model):
     quantity = models.PositiveIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(100)]
     )
+
+    class Meta:
+        verbose_name = _("OrderItem")
+        verbose_name_plural = _("OrderItems")
+        constraints = [
+            models.CheckConstraint(
+                check=(models.Q(flower__isnull=True) | models.Q(bouquet__isnull=True)),
+                name="no_both_flower_and_bouquet"
+            )
+        ]
+        ordering = ["order"]
 
     @property
     def product_type(self) -> str:
