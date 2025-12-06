@@ -30,7 +30,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, null=False, blank=False)
     first_name = models.CharField(null=False, blank=False, validators=[MinLengthValidator(2)])
     last_name = models.CharField(null=False, blank=False, validators=[MinLengthValidator(2)])
-    phone = PhoneNumberField(region="PL")  # type: ignore
+    phone = PhoneNumberField(region="PL", unique=True)  # type: ignore
     created_at = models.DateTimeField(auto_now_add=True)
     is_staff = models.BooleanField(default=False)
     last_login = None

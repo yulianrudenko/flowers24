@@ -16,30 +16,10 @@ class UserSerializer(serializers.ModelSerializer):
             "phone",
             "created_at",
         ]
+        updatable_fields = ["first_name", "last_name", "phone"]
         extra_kwargs = {
-            "password": {"write_only": True, "required": True}
+            "password": {"write_only": True},
         }
-
-    def validate(self, attrs: dict):
-        # Different config for POST and PATCH (create and partial update)
-        if self.instance:
-            field_names = [f.name for f in self.Meta.model._meta.get_fields()]
-            instance_data = {
-                k: getattr(self.instance, k)
-                for k in field_names
-                if hasattr(self.instance, k)
-            }
-            data = {**instance_data, **attrs}
-            print(data)
-        else:
-            data = attrs
-
-        try:
-            User(**data).full_clean()
-        except ValidationError as e:
-            raise serializers.ValidationError(e.message_dict)
-
-        return attrs
 
     def create(self, validated_data: dict):
         password = validated_data["password"]
@@ -49,7 +29,8 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, instance: User, validated_data: dict):
-        # Password cannot be updated
-        # TODO: separate endpoint?
-        validated_data.pop("password")
+        validated_data = {
+            k: v for k, v in validated_data.items() if k in self.Meta.updatable_fields
+        }
+
         return super().update(instance, validated_data)

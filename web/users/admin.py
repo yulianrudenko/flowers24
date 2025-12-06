@@ -16,8 +16,8 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ["id", "email"]
 
     fieldsets = [
-        (None, {"fields": ["email"]}),
-        (_("Personal info"), {"fields": ["first_name", "last_name", "created_at"]}),
+        (None, {"fields": ["id", "email"]}),
+        (_("Personal info"), {"fields": ["first_name", "last_name", "phone", "created_at"]}),
         (
             _("Permissions"),
             {
