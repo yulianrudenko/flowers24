@@ -12,11 +12,6 @@ from flowers.models import Bouquet, Flower
 
 
 class Order(models.Model):
-    postal_code_validator = RegexValidator(
-        regex=r'^\d{2}-\d{3}$',
-        message=_("Postal code must be in the format NN-NNN.")
-    )
-
     class Status(models.TextChoices):
         WAITING_PAYMENT = "waiting_payment", _("Waiting for payment")
         PAID = "paid", _("Paid")
@@ -29,6 +24,11 @@ class Order(models.Model):
     class DeliveryMethod(models.TextChoices):
         COURIER = "courier", _("Courier")
         PICKUP = "pickup", _("Self-pickup")
+
+    postal_code_validator = RegexValidator(
+        regex=r'^\d{2}-\d{3}$',
+        message=_("Postal code must be in the format NN-NNN.")
+    )
 
     id = models.UUIDField(
         primary_key=True, default=uuid4, editable=False, db_index=True
@@ -144,3 +144,10 @@ class OrderItem(models.Model):
             raise ValidationError(
                 {"flower": _("This flower can not be sold separately from bouquet")}
             )
+
+
+class Payment(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    method = models.CharField(max_length=30, default='fake_online')
+    status = models.CharField(max_length=20, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
