@@ -4,7 +4,7 @@ from uuid import uuid4
 
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, RegexValidator
 from django.utils.translation import gettext_lazy as _
 
 from users.models import User
@@ -12,13 +12,23 @@ from flowers.models import Bouquet, Flower
 
 
 class Order(models.Model):
+    postal_code_validator = RegexValidator(
+        regex=r'^\d{2}-\d{3}$',
+        message=_("Postal code must be in the format NN-NNN.")
+    )
+
     class Status(models.TextChoices):
         WAITING_PAYMENT = "waiting_payment", _("Waiting for payment")
         PAID = "paid", _("Paid")
         PREPARING = "preparing", _("Preparing")
         IN_DELIVERY = "in_delivery", _("In Delivery")
-        DELIVERY = "delivered", _("Delivered")
+        DELIVERED = "delivered", _("Delivered")
         CANCELLED = "cancelled", _("Cancelled")
+        REFUNDED = "refunded", _("Refunded")
+
+    class DeliveryMethod(models.TextChoices):
+        COURIER = "courier", _("Courier")
+        PICKUP = "pickup", _("Self-pickup")
 
     id = models.UUIDField(
         primary_key=True, default=uuid4, editable=False, db_index=True
@@ -27,7 +37,17 @@ class Order(models.Model):
     status = models.CharField(
         max_length=20, choices=Status, default=Status.WAITING_PAYMENT.value
     )
+    delivery_method = models.CharField(
+        max_length=20, choices=DeliveryMethod, blank=False, null=False
+    )
     notes = models.TextField(blank=True, null=True)
+    address_line1 = models.CharField(max_length=255, blank=True, null=True)
+    address_line2 = models.CharField(max_length=255, blank=True, null=True)
+    city = models.CharField(max_length=100)
+    postal_code = models.CharField(
+        max_length=6,
+        validators=[postal_code_validator]
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -57,9 +77,9 @@ class OrderItem(models.Model):
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE, related_name="items", null=False, blank=False
     )
-    flower = models.ForeignKey(Flower, on_delete=models.SET_NULL, null=True, blank=True)
+    flower = models.ForeignKey(Flower, on_delete=models.SET_NULL, blank=True, null=True)
     bouquet = models.ForeignKey(
-        Bouquet, on_delete=models.SET_NULL, null=True, blank=True
+        Bouquet, on_delete=models.SET_NULL, blank=True, null=True
     )
     quantity = models.PositiveIntegerField(validators=[MinValueValidator(1)])
 

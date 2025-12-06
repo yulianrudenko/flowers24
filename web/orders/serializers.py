@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
@@ -62,12 +63,24 @@ class OrderSerializer(serializers.ModelSerializer):
             "id",
             "user",
             "status",
+            "delivery_method",
             "notes",
+            "address_line1",
+            "address_line2",
+            "city",
+            "postal_code",
             "items",
+            "total_price",
             "created_at",
             "updated_at",
         ]
-        extra_kwargs = {"user": {"read_only": True}, "notes": {"read_only": True}}
+        extra_kwargs = {
+            "user": {"read_only": True},
+            "status": {"read_only": True},
+            "notes": {"read_only": True},
+            "created_at": {"read_only": True},
+            "updated_at": {"read_only": True},
+        }
 
     def validate(self, attrs) -> dict:
         if (user := getattr(self.context.get("request", None), "user", None)) is None:

@@ -19,7 +19,7 @@ class OrderDetailAPIView(RetrieveUpdateDestroyAPIView):
     def get_queryset(self):  # type: ignore
         order_id = self.kwargs.get("order_id")
         return Order.objects.prefetch_related("items").filter(
-            order_id=order_id, user=self.request.user
+            pk=order_id, user=self.request.user
         )
 
 
