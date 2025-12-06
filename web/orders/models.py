@@ -1,9 +1,10 @@
 from decimal import Decimal
+from typing import Iterable
 from uuid import uuid4
 
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 
 from users.models import User
@@ -26,7 +27,7 @@ class Order(models.Model):
     status = models.CharField(
         max_length=20, choices=Status, default=Status.WAITING_PAYMENT.value
     )
-    notes = models.TextField()
+    notes = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -53,22 +54,22 @@ class OrderItem(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid4, editable=False, db_index=True
     )
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
-    flower = models.ForeignKey(Flower, null=True, blank=True, on_delete=models.SET_NULL)
+    order = models.ForeignKey(
+        Order, on_delete=models.CASCADE, related_name="items", null=False, blank=False
+    )
+    flower = models.ForeignKey(Flower, on_delete=models.SET_NULL, null=True, blank=True)
     bouquet = models.ForeignKey(
-        Bouquet, null=True, blank=True, on_delete=models.SET_NULL
+        Bouquet, on_delete=models.SET_NULL, null=True, blank=True
     )
-    quantity = models.PositiveIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(100)]
-    )
+    quantity = models.PositiveIntegerField(validators=[MinValueValidator(1)])
 
     class Meta:
-        verbose_name = _("OrderItem")
-        verbose_name_plural = _("OrderItems")
+        verbose_name = _("Order Item")
+        verbose_name_plural = _("Order Items")
         constraints = [
             models.CheckConstraint(
                 check=(models.Q(flower__isnull=True) | models.Q(bouquet__isnull=True)),
-                name="no_both_flower_and_bouquet"
+                name="no_both_flower_and_bouquet",
             )
         ]
         ordering = ["order"]
@@ -98,14 +99,28 @@ class OrderItem(models.Model):
         return _("unknown")
 
     def clean(self) -> None:
+        super().clean()
+
         if self.flower and self.bouquet:
             raise ValidationError(_("Only one of flower or bouquet can be selected"))
         if not self.flower and not self.bouquet:
-            raise ValidationError(_("You must select either flower or bouquet"))
+            raise ValidationError(
+                {
+                    "flower": _("You must select either flower or bouquet"),
+                    "bouquet": _("You must select either flower or bouquet"),
+                }
+            )
 
         if self.product is not None and self.quantity > self.product.MAX_ORDER_QUANTITY:
             raise ValidationError(
-                _(
-                    f"Maximum quantity for this product is {self.product.MAX_ORDER_QUANTITY}."
-                )
+                {
+                    "quantity": _(
+                        f"Maximum quantity for this product is {self.product.MAX_ORDER_QUANTITY}."
+                    )
+                }
+            )
+
+        if self.flower is not None and not self.flower.can_be_sold_separately:
+            raise ValidationError(
+                {"flower": _("This flower can not be sold separately from bouquet")}
             )

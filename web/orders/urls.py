@@ -12,6 +12,11 @@ urlpatterns = [
         name="order-detail",
     ),
     path(
+        "<uuid:order_id>/items/",
+        views.OrderItemListAPIView.as_view(),
+        name="order-item-list",
+    ),
+    path(
         "<uuid:order_id>/items/<uuid:pk>/",
         views.OrderItemDetailAPIView.as_view(),
         name="order-item-detail",

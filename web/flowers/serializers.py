@@ -6,7 +6,7 @@ from flowers.models import Bouquet, BouquetCategory, Flower
 class FlowerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Flower
-        fields = ["id", "image", "in_stock", "allowed_to_sell_as_single", "bouquets"]
+        fields = ["id", "image", "in_stock", "can_be_sold_separately", "bouquets"]
 
 
 class BouquetSerializer(serializers.ModelSerializer):

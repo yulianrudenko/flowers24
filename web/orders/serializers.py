@@ -1,24 +1,56 @@
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
+from orders import services
 from orders.models import Order, OrderItem
 from flowers.serializers import FlowerSerializer, BouquetSerializer
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    flower = FlowerSerializer(read_only=True)
-    bouquet = BouquetSerializer(read_only=True)
+    product = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = OrderItem
-        fields = ["id", "order", "flower", "bouquet", "quantity"]
+        fields = [
+            "id",
+            "order",
+            "flower",
+            "bouquet",
+            "product",
+            "quantity",
+        ]
+        extra_kwargs = {
+            "order": {"read_only": True},
+        }
 
-    def validate(self, attrs):
+    def get_product(self, obj):
+        if obj.flower is not None:
+            return FlowerSerializer(obj.flower, context=self.context).data
+        if obj.bouquet is not None:
+            return BouquetSerializer(obj.bouquet, context=self.context).data
+
+        return None
+
+    def to_internal_value(self, data):
+        attrs = super().to_internal_value(data)
+
+        if self.instance is None:
+            if (order_id := self.context.get("order_id")) is None:
+                raise ValueError("No order ID in context")
+            attrs["order_id"] = order_id
+
+        return attrs
+
+    def validate(self, attrs) -> dict:
         try:
             OrderItem(**attrs).full_clean()
         except ValidationError as e:
             raise serializers.ValidationError(e.message_dict)
+
         return attrs
+
+    def create(self, validated_data: dict) -> OrderItem:
+        return services.create_order_item(**validated_data)
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -35,3 +67,20 @@ class OrderSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
+        extra_kwargs = {"user": {"read_only": True}, "notes": {"read_only": True}}
+
+    def validate(self, attrs) -> dict:
+        if (user := getattr(self.context.get("request", None), "user", None)) is None:
+            raise ValueError("No info about request user")
+
+        try:
+            Order(**attrs, user=user).full_clean(exclude="user")
+        except ValidationError as e:
+            raise serializers.ValidationError(e.message_dict)
+        return attrs
+
+    def create(self, validated_data: dict) -> Order:
+        order = Order(**validated_data)
+        order.user = self.context["request"].user
+        order.save()
+        return order

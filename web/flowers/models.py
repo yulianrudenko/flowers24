@@ -36,7 +36,7 @@ class BaseProduct(models.Model):
 class Flower(BaseProduct):
     image = models.ImageField(upload_to=get_flower_img_path)
     in_stock = models.BooleanField(default=True)
-    allowed_to_sell_as_single = models.BooleanField()
+    can_be_sold_separately = models.BooleanField()
 
     MAX_ORDER_QUANTITY = 10_000
 
