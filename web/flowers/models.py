@@ -88,8 +88,8 @@ class Bouquet(BaseProduct):
 
 
 class BouquetFlower(models.Model):
-    bouquet = models.ForeignKey(Bouquet, on_delete=models.CASCADE)
-    flower = models.ForeignKey(Flower, on_delete=models.PROTECT)
+    bouquet = models.ForeignKey(Bouquet, on_delete=models.CASCADE, related_name="bouquet_flowers")
+    flower = models.ForeignKey(Flower, on_delete=models.PROTECT, related_name="bouquet_flowers")
     quantity = models.PositiveIntegerField(default=1)
 
     class Meta:

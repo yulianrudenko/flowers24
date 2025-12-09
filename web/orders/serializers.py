@@ -1,10 +1,29 @@
-from decimal import Decimal
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
 from orders import services
-from orders.models import Order, OrderItem
+from orders.models import Order, OrderItem, Payment
 from flowers.serializers import FlowerSerializer, BouquetSerializer
+
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = [
+            "id",
+            "order",
+            "method",
+            "status",
+            "created_at",
+            "completed_at",
+        ]
+        extra_kwargs = {
+            "id": {"read_only": True},
+            "order": {"read_only": True},
+            "status": {"read_only": True},
+            "created_at": {"read_only": True},
+            "completed_at": {"read_only": True},
+        }
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
@@ -56,6 +75,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True, read_only=True)
+    payments = PaymentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Order
@@ -71,13 +91,17 @@ class OrderSerializer(serializers.ModelSerializer):
             "postal_code",
             "items",
             "total_price",
+            "payments",
             "created_at",
             "updated_at",
         ]
         extra_kwargs = {
             "user": {"read_only": True},
             "status": {"read_only": True},
+            "delivery_method": {"required": False, "allow_blank": False},
             "notes": {"read_only": True},
+            "city": {"required": False, "allow_blank": False},
+            "postal_code": {"required": False, "allow_blank": False},
             "created_at": {"read_only": True},
             "updated_at": {"read_only": True},
         }

@@ -26,28 +26,24 @@ class Order(models.Model):
         PICKUP = "pickup", _("Self-pickup")
 
     postal_code_validator = RegexValidator(
-        regex=r'^\d{2}-\d{3}$',
-        message=_("Postal code must be in the format NN-NNN.")
+        regex=r"^\d{2}-\d{3}$", message=_("Postal code must be in the format NN-NNN.")
     )
 
     id = models.UUIDField(
         primary_key=True, default=uuid4, editable=False, db_index=True
     )
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=False, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="orders", blank=False, null=True)
     status = models.CharField(
         max_length=20, choices=Status, default=Status.WAITING_PAYMENT.value
     )
     delivery_method = models.CharField(
-        max_length=20, choices=DeliveryMethod, blank=False, null=False
+        max_length=20, choices=DeliveryMethod, blank=True, null=True
     )
     notes = models.TextField(blank=True, null=True)
     address_line1 = models.CharField(max_length=255, blank=True, null=True)
     address_line2 = models.CharField(max_length=255, blank=True, null=True)
-    city = models.CharField(max_length=100)
-    postal_code = models.CharField(
-        max_length=6,
-        validators=[postal_code_validator]
-    )
+    city = models.CharField(max_length=100, blank=True, null=True)
+    postal_code = models.CharField(max_length=6, blank=True, null=True, validators=[postal_code_validator])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -77,9 +73,9 @@ class OrderItem(models.Model):
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE, related_name="items", null=False, blank=False
     )
-    flower = models.ForeignKey(Flower, on_delete=models.SET_NULL, blank=True, null=True)
+    flower = models.ForeignKey(Flower, on_delete=models.SET_NULL, related_name="order_items", blank=True, null=True)
     bouquet = models.ForeignKey(
-        Bouquet, on_delete=models.SET_NULL, blank=True, null=True
+        Bouquet, on_delete=models.SET_NULL, related_name="order_items", blank=True, null=True
     )
     quantity = models.PositiveIntegerField(validators=[MinValueValidator(1)])
 
@@ -147,7 +143,21 @@ class OrderItem(models.Model):
 
 
 class Payment(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.CASCADE)
-    method = models.CharField(max_length=30, default='fake_online')
-    status = models.CharField(max_length=20, default='pending')
+    class PaymentMethod(models.TextChoices):
+        BLIK = "blik", "BLIK"
+        PAYPAL = "paypal", "Paypal"
+
+    class Status(models.TextChoices):
+        PENDING = "pending", _("Pending")
+        COMPLETED = "completed", _("Completed")
+        FAILED = "failed", _("Failed")
+
+    order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name="payments")
+    method = models.CharField(max_length=30, choices=PaymentMethod)
+    status = models.CharField(
+        max_length=20,
+        choices=Status,
+        default=Status.PENDING.value,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(blank=True, null=True)
