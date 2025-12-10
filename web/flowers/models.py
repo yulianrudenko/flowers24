@@ -91,8 +91,8 @@ class BouquetFlower(models.Model):
     quantity = models.PositiveIntegerField(default=1)
 
     class Meta:
-        verbose_name = _("BouquetFlower")
-        verbose_name_plural = _("BouquetFlowers")
+        verbose_name = _("Bouquet Flower")
+        verbose_name_plural = _("Bouquet Flowers")
         unique_together = ["bouquet", "flower"]
         ordering = ["bouquet"]
 

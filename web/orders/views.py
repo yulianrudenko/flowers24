@@ -39,6 +39,7 @@ class OrderListAPIView(ListCreateAPIView):
 class OrderDetailAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
+    http_method_names = ["get", "patch", "delete"]
 
     def get_queryset(self):  # type: ignore
         return Order.objects.prefetch_related("items").filter(user=self.request.user)
@@ -68,6 +69,7 @@ class OrderItemListAPIView(ListCreateAPIView):
 class OrderItemDetailAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = OrderItemSerializer
+    http_method_names = ["get", "patch", "delete"]
 
     def get_queryset(self):  # type: ignore
         order_id = self.kwargs.get("order_id")
