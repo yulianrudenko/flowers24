@@ -13,12 +13,20 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class User(AbstractBaseUser, PermissionsMixin):
     class UserManager(BaseUserManager):
-        def create_superuser(self, email: str, password: str, **other_fields):
-            other_fields.setdefault("is_staff", True)
-            user = self.model(email=email, **other_fields, is_superuser=True)
+        def create_user(self, password: str, **other_fields):
+            other_fields.setdefault("is_staff", False)
+            other_fields.setdefault("is_superuser", False)
+
+            user = self.model(**other_fields)
             user.set_password(password)
             user.save()
             return user
+
+        def create_superuser(self, password: str, **other_fields):
+            other_fields.setdefault("is_staff", True)
+            other_fields.setdefault("is_superuser", True)
+
+            return self.create_user(password, **other_fields)
 
     USERNAME_FIELD = "email"
 

@@ -24,6 +24,6 @@ urlpatterns = [
     path(
         "<uuid:pk>/pay/",
         views.OrderPayAPIView.as_view(),
-        name="order-detail",
+        name="order-pay",
     ),
 ]

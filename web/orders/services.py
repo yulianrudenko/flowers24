@@ -12,6 +12,8 @@ from orders.models import Order, OrderItem, Payment
 @transaction.atomic
 def create_order_item(**validated_data: dict[str, Any]) -> OrderItem:
     new_item_obj = OrderItem(**validated_data)
+    if not new_item_obj.in_stock:
+        raise ValidationError({"detail": _("Currently product is not in stock")})
 
     same_product_items_qs = OrderItem.objects.filter(order=new_item_obj.order).filter(
         Q(bouquet=new_item_obj.bouquet) | Q(flower=new_item_obj.flower)
@@ -33,7 +35,7 @@ def create_order_item(**validated_data: dict[str, Any]) -> OrderItem:
 
 @transaction.atomic
 def complete_order_payment(
-    order: Order, payment_methd: Payment.PaymentMethod
+    order: Order, payment_methd: Payment.Method
 ) -> Payment | None:
     if order.status != Order.Status.WAITING_PAYMENT:
         raise ValidationError(
@@ -42,6 +44,12 @@ def complete_order_payment(
     if not order.items.exists():
         raise ValidationError(
             {"detail": _("Cannot pay for empty order")}
+        )
+    if order.items.filter(
+        Q(flower__in_stock=False) | Q(bouquet__flowers__in_stock=False)
+    ).exists():
+        raise ValidationError(
+            {"detail": _("Currently one of the order products is not in stock")}
         )
 
     payment = Payment.objects.create(

@@ -55,8 +55,6 @@ class BouquetCategory(models.Model):
     )
     name = models.CharField(max_length=60, unique=True)
 
-    bouquets: models.QuerySet["Bouquet"]
-
     class Meta:
         verbose_name = _("Category")
         verbose_name_plural = _("Categories")

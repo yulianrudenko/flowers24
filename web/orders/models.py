@@ -32,7 +32,9 @@ class Order(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid4, editable=False, db_index=True
     )
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="orders", blank=False, null=True)
+    user = models.ForeignKey(
+        User, on_delete=models.SET_NULL, related_name="orders", blank=False, null=True
+    )
     status = models.CharField(
         max_length=20, choices=Status, default=Status.WAITING_PAYMENT.value
     )
@@ -43,11 +45,11 @@ class Order(models.Model):
     address_line1 = models.CharField(max_length=255, blank=True, null=True)
     address_line2 = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
-    postal_code = models.CharField(max_length=6, blank=True, null=True, validators=[postal_code_validator])
+    postal_code = models.CharField(
+        max_length=6, blank=True, null=True, validators=[postal_code_validator]
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    items: models.QuerySet["OrderItem"]
 
     class Meta:
         verbose_name = _("Order")
@@ -73,9 +75,19 @@ class OrderItem(models.Model):
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE, related_name="items", null=False, blank=False
     )
-    flower = models.ForeignKey(Flower, on_delete=models.SET_NULL, related_name="order_items", blank=True, null=True)
+    flower = models.ForeignKey(
+        Flower,
+        on_delete=models.CASCADE,
+        related_name="order_items",
+        blank=True,
+        null=True,
+    )
     bouquet = models.ForeignKey(
-        Bouquet, on_delete=models.SET_NULL, related_name="order_items", blank=True, null=True
+        Bouquet,
+        on_delete=models.CASCADE,
+        related_name="order_items",
+        blank=True,
+        null=True,
     )
     quantity = models.PositiveIntegerField(validators=[MinValueValidator(1)])
 
@@ -92,15 +104,22 @@ class OrderItem(models.Model):
 
     @property
     def product_type(self) -> str:
-        if self.flower:
+        if self.flower is not None:
             return "flower"
-        if self.bouquet:
-            return "bouquet"
-        return "unknown"
+        return "bouquet"
 
     @property
     def product(self) -> Flower | Bouquet | None:
         return self.flower or self.bouquet
+
+    @property
+    def in_stock(self) -> bool:
+        if self.flower is not None:
+            return self.flower.in_stock
+        if self.bouquet is not None:
+            return not self.bouquet.flowers.filter(in_stock=False).exists()
+
+        return False
 
     @property
     def price(self) -> Decimal:
@@ -143,7 +162,7 @@ class OrderItem(models.Model):
 
 
 class Payment(models.Model):
-    class PaymentMethod(models.TextChoices):
+    class Method(models.TextChoices):
         BLIK = "blik", "BLIK"
         PAYPAL = "paypal", "Paypal"
 
@@ -153,7 +172,7 @@ class Payment(models.Model):
         FAILED = "failed", _("Failed")
 
     order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name="payments")
-    method = models.CharField(max_length=30, choices=PaymentMethod)
+    method = models.CharField(max_length=30, choices=Method)
     status = models.CharField(
         max_length=20,
         choices=Status,
