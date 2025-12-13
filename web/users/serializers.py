@@ -3,11 +3,24 @@ from rest_framework import serializers
 from users.models import User
 
 
-class UserSerializer(serializers.ModelSerializer):
-    _updatable_fields = ["first_name", "last_name", "phone"]
+class BaseUserSerializer(serializers.ModelSerializer):
     _hidden_from_others_fields = ["email", "phone"]
 
     class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "first_name",
+            "last_name",
+            "phone",
+            "created_at",
+        ]
+        read_only_fields = ["created_at"]
+
+
+class UserCreateSerializer(BaseUserSerializer):
+    class Meta(BaseUserSerializer.Meta):
         model = User
         fields = [
             "id",
@@ -20,7 +33,6 @@ class UserSerializer(serializers.ModelSerializer):
         ]
         extra_kwargs = {
             "password": {"write_only": True},
-            "created_at": {"read_only": True},
         }
 
     def create(self, validated_data: dict):
@@ -30,12 +42,12 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-    def update(self, instance: User, validated_data: dict):
-        validated_data = {
-            k: v for k, v in validated_data.items() if k in self._updatable_fields
-        }
 
-        return super().update(instance, validated_data)
+class UserDetailSerializer(BaseUserSerializer):
+    class Meta(BaseUserSerializer.Meta):
+        read_only_fields = BaseUserSerializer.Meta.read_only_fields + [
+            "email",
+        ]
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)

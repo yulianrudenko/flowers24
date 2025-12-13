@@ -26,7 +26,7 @@ class PaymentSerializer(serializers.ModelSerializer):
         }
 
 
-class OrderItemSerializer(serializers.ModelSerializer):
+class BaseOrderItemSerializer(serializers.ModelSerializer):
     product = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -39,9 +39,6 @@ class OrderItemSerializer(serializers.ModelSerializer):
             "product",
             "quantity",
         ]
-        extra_kwargs = {
-            "order": {"read_only": True},
-        }
 
     def get_product(self, obj):
         if obj.flower is not None:
@@ -50,6 +47,11 @@ class OrderItemSerializer(serializers.ModelSerializer):
             return BouquetSerializer(obj.bouquet, context=self.context).data
 
         return None
+
+
+class OrderItemListSerializer(BaseOrderItemSerializer):
+    class Meta(BaseOrderItemSerializer.Meta):
+        read_only_fields = ["order"]
 
     def to_internal_value(self, data):
         attrs = super().to_internal_value(data)
@@ -61,9 +63,11 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
         return attrs
 
-    def validate(self, attrs) -> dict:
+    def validate(self, attrs):
+        obj = OrderItem(**attrs)
+
         try:
-            OrderItem(**attrs).full_clean()
+            obj.full_clean()
         except ValidationError as e:
             raise serializers.ValidationError(e.message_dict)
 
@@ -73,8 +77,32 @@ class OrderItemSerializer(serializers.ModelSerializer):
         return services.create_order_item(**validated_data)
 
 
+class OrderItemDetailSerializer(BaseOrderItemSerializer):
+    product = serializers.SerializerMethodField(read_only=True)
+
+    class Meta(BaseOrderItemSerializer.Meta):
+        read_only_fields = [
+            "order",
+            "flower",
+            "bouquet",
+            "product",
+        ]
+
+    def validate(self, attrs):
+        obj: OrderItem = self.instance  # type: ignore
+        for field, value in attrs.items():
+            setattr(obj, field, value)
+
+        try:
+            obj.full_clean()
+        except ValidationError as e:
+            raise serializers.ValidationError(e.message_dict)
+
+        return attrs
+
+
 class OrderSerializer(serializers.ModelSerializer):
-    items = OrderItemSerializer(many=True, read_only=True)
+    items = OrderItemDetailSerializer(many=True, read_only=True)
     payments = PaymentSerializer(many=True, read_only=True)
 
     class Meta:

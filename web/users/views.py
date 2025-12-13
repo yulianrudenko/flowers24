@@ -5,18 +5,18 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from users.models import User
-from users.serializers import UserSerializer
+from users.serializers import UserCreateSerializer, UserDetailSerializer
 
 
 class UserRegisterAPIView(CreateAPIView):
     queryset = User.objects.all()
     permission_classes = []
-    serializer_class = UserSerializer
+    serializer_class = UserCreateSerializer
 
 
 class UserProfileAPIView(APIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = UserSerializer
+    serializer_class = UserDetailSerializer
 
     def get_permissions(self):
         return [IsAuthenticated()]
@@ -41,4 +41,4 @@ class UserProfileAPIView(APIView):
 class UserDetailAPIView(RetrieveAPIView):
     queryset = User.objects.all()
     permission_classes = []
-    serializer_class = UserSerializer
+    serializer_class = UserDetailSerializer

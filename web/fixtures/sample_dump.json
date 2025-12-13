@@ -1,0 +1,963 @@
+[
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2025-12-13T14:39:20.980Z",
+        "user": "f92b94ed-95e2-4791-b212-47a4b9ef8c44",
+        "content_type": 6,
+        "object_id": "a6c8f69d-e310-466f-8827-4f23424ba994",
+        "object_repr": "user@mail.com",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2025-12-13T14:45:51.333Z",
+        "user": "f92b94ed-95e2-4791-b212-47a4b9ef8c44",
+        "content_type": 6,
+        "object_id": "57a65b83-5024-45e7-836f-a0a83b4a5d33",
+        "object_repr": "yulian.rudenko.ukraine@gmail.com",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2025-12-13T15:06:49.254Z",
+        "user": "f92b94ed-95e2-4791-b212-47a4b9ef8c44",
+        "content_type": 12,
+        "object_id": "dca43e6c-dd1d-43cf-8f3b-f526c9b6944f",
+        "object_repr": "3 × Eukaliptus",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+        "name": "Can add log entry",
+        "content_type": 1,
+        "codename": "add_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+        "name": "Can change log entry",
+        "content_type": 1,
+        "codename": "change_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+        "name": "Can delete log entry",
+        "content_type": 1,
+        "codename": "delete_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+        "name": "Can view log entry",
+        "content_type": 1,
+        "codename": "view_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+        "name": "Can add permission",
+        "content_type": 2,
+        "codename": "add_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+        "name": "Can change permission",
+        "content_type": 2,
+        "codename": "change_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+        "name": "Can delete permission",
+        "content_type": 2,
+        "codename": "delete_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+        "name": "Can view permission",
+        "content_type": 2,
+        "codename": "view_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+        "name": "Can add group",
+        "content_type": 3,
+        "codename": "add_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+        "name": "Can change group",
+        "content_type": 3,
+        "codename": "change_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+        "name": "Can delete group",
+        "content_type": 3,
+        "codename": "delete_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+        "name": "Can view group",
+        "content_type": 3,
+        "codename": "view_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+        "name": "Can add content type",
+        "content_type": 4,
+        "codename": "add_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+        "name": "Can change content type",
+        "content_type": 4,
+        "codename": "change_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+        "name": "Can delete content type",
+        "content_type": 4,
+        "codename": "delete_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+        "name": "Can view content type",
+        "content_type": 4,
+        "codename": "view_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+        "name": "Can add session",
+        "content_type": 5,
+        "codename": "add_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+        "name": "Can change session",
+        "content_type": 5,
+        "codename": "change_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+        "name": "Can delete session",
+        "content_type": 5,
+        "codename": "delete_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+        "name": "Can view session",
+        "content_type": 5,
+        "codename": "view_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+        "name": "Can add User",
+        "content_type": 6,
+        "codename": "add_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+        "name": "Can change User",
+        "content_type": 6,
+        "codename": "change_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+        "name": "Can delete User",
+        "content_type": 6,
+        "codename": "delete_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+        "name": "Can view User",
+        "content_type": 6,
+        "codename": "view_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+        "name": "Can add Category",
+        "content_type": 7,
+        "codename": "add_bouquetcategory"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+        "name": "Can change Category",
+        "content_type": 7,
+        "codename": "change_bouquetcategory"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+        "name": "Can delete Category",
+        "content_type": 7,
+        "codename": "delete_bouquetcategory"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+        "name": "Can view Category",
+        "content_type": 7,
+        "codename": "view_bouquetcategory"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+        "name": "Can add Flower",
+        "content_type": 8,
+        "codename": "add_flower"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+        "name": "Can change Flower",
+        "content_type": 8,
+        "codename": "change_flower"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+        "name": "Can delete Flower",
+        "content_type": 8,
+        "codename": "delete_flower"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+        "name": "Can view Flower",
+        "content_type": 8,
+        "codename": "view_flower"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+        "name": "Can add Bouquet",
+        "content_type": 9,
+        "codename": "add_bouquet"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+        "name": "Can change Bouquet",
+        "content_type": 9,
+        "codename": "change_bouquet"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+        "name": "Can delete Bouquet",
+        "content_type": 9,
+        "codename": "delete_bouquet"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+        "name": "Can view Bouquet",
+        "content_type": 9,
+        "codename": "view_bouquet"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+        "name": "Can add BouquetFlower",
+        "content_type": 10,
+        "codename": "add_bouquetflower"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+        "name": "Can change BouquetFlower",
+        "content_type": 10,
+        "codename": "change_bouquetflower"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+        "name": "Can delete BouquetFlower",
+        "content_type": 10,
+        "codename": "delete_bouquetflower"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+        "name": "Can view BouquetFlower",
+        "content_type": 10,
+        "codename": "view_bouquetflower"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 41,
+    "fields": {
+        "name": "Can add Order",
+        "content_type": 11,
+        "codename": "add_order"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 42,
+    "fields": {
+        "name": "Can change Order",
+        "content_type": 11,
+        "codename": "change_order"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 43,
+    "fields": {
+        "name": "Can delete Order",
+        "content_type": 11,
+        "codename": "delete_order"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 44,
+    "fields": {
+        "name": "Can view Order",
+        "content_type": 11,
+        "codename": "view_order"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 45,
+    "fields": {
+        "name": "Can add Order Item",
+        "content_type": 12,
+        "codename": "add_orderitem"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 46,
+    "fields": {
+        "name": "Can change Order Item",
+        "content_type": 12,
+        "codename": "change_orderitem"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 47,
+    "fields": {
+        "name": "Can delete Order Item",
+        "content_type": 12,
+        "codename": "delete_orderitem"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 48,
+    "fields": {
+        "name": "Can view Order Item",
+        "content_type": 12,
+        "codename": "view_orderitem"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 49,
+    "fields": {
+        "name": "Can add payment",
+        "content_type": 13,
+        "codename": "add_payment"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 50,
+    "fields": {
+        "name": "Can change payment",
+        "content_type": 13,
+        "codename": "change_payment"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 51,
+    "fields": {
+        "name": "Can delete payment",
+        "content_type": 13,
+        "codename": "delete_payment"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 52,
+    "fields": {
+        "name": "Can view payment",
+        "content_type": 13,
+        "codename": "view_payment"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": {
+        "app_label": "admin",
+        "model": "logentry"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": {
+        "app_label": "auth",
+        "model": "permission"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": {
+        "app_label": "auth",
+        "model": "group"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": {
+        "app_label": "contenttypes",
+        "model": "contenttype"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": {
+        "app_label": "sessions",
+        "model": "session"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": {
+        "app_label": "users",
+        "model": "user"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 7,
+    "fields": {
+        "app_label": "flowers",
+        "model": "bouquetcategory"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 8,
+    "fields": {
+        "app_label": "flowers",
+        "model": "flower"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 9,
+    "fields": {
+        "app_label": "flowers",
+        "model": "bouquet"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 10,
+    "fields": {
+        "app_label": "flowers",
+        "model": "bouquetflower"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 11,
+    "fields": {
+        "app_label": "orders",
+        "model": "order"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 12,
+    "fields": {
+        "app_label": "orders",
+        "model": "orderitem"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 13,
+    "fields": {
+        "app_label": "orders",
+        "model": "payment"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "7ohpr9kxct7ujplipdqrb4suv7x81udk",
+    "fields": {
+        "session_data": ".eJxVjDsOwjAQBe_imliOs_4sJT1niHbXGxJAiZRPhbg7REoB3ZNm5r1MS9vat9uiczsUczYdekbQUmFQX0HCumJf74uAUbssAOb0mzHJQ8e9LXcab5OVaVznge2u2IMu9joVfV4O9--gp6X_1hij5-SkAUiSGmAKglpnRC8cIbGLLodEIWNIENUJMjVdUCZibYp5fwC9HUDX:1vUQcg:ihyewS0O7t-ZqoNVy_zsZN1axp1lSr5J_V1KJ9tWAKs",
+        "expire_date": "2025-12-27T14:29:26.232Z"
+    }
+},
+{
+    "model": "users.user",
+    "pk": "57a65b83-5024-45e7-836f-a0a83b4a5d33",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$b5SWZgLno5jiw1AtTPlVSR$rjjcDHLy0xZQ/3WCvR7dYEQcm0hZiW0RCjIf5VFiBKU=",
+        "is_superuser": false,
+        "email": "yulian.rudenko.ukraine@gmail.com",
+        "first_name": "Yulian",
+        "last_name": "Rudenko",
+        "phone": "+48880449541",
+        "created_at": "2025-12-13T14:45:51.331Z",
+        "is_staff": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": "c24a0662-8656-45d9-b66b-4db56ced62a9",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$3J0y2LiPwXJtysrsTP6fxG$YEdwH2zQYdFKvAIKbIcwrpWtZ0ACA2hi3kVShmRild8=",
+        "is_superuser": false,
+        "email": "user@mail.com",
+        "first_name": "Janek",
+        "last_name": "Kowalewski",
+        "phone": "+48880449548",
+        "created_at": "2025-12-13T14:52:17.312Z",
+        "is_staff": false,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": "f92b94ed-95e2-4791-b212-47a4b9ef8c44",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$Rgj5Moqgmpd6WdaRnMBcSc$mpbYla+bJmGMOP9b0wTifETUiumiEG+CL9vjJXO2Dm8=",
+        "is_superuser": true,
+        "email": "admin@mail.com",
+        "first_name": "",
+        "last_name": "",
+        "phone": "",
+        "created_at": "2025-12-13T14:29:16.949Z",
+        "is_staff": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "flowers.flower",
+    "pk": "056f7e14-f035-40d2-a83a-60f455afc35f",
+    "fields": {
+        "name": "Biała lilia",
+        "price": "11.00",
+        "description": "Biała lilia (Lilium candidum) to piękna, pachnąca roślina cebulowa o dużych, śnieżnobiałych kwiatach, symbolizująca czystość, niewinność i odrodzenie, używana w ogrodach, perfumerii i sztuce, często kojarzona z Matką Boską. Występuje naturalnie w rejonach śródziemnomorskich i Azji Zachodniej, jest popularna w uprawie, a cebulki posiadają właściwości lecznicze.",
+        "created_at": "2025-12-07T19:32:20.011Z",
+        "image": "flowers/7e740bca-fd0c-45e1-aa2b-0da4663f4856.png",
+        "in_stock": true,
+        "can_be_sold_separately": true
+    }
+},
+{
+    "model": "flowers.flower",
+    "pk": "3550bedc-bb70-469a-87cc-f5683476372c",
+    "fields": {
+        "name": "Róża czerwona",
+        "price": "10.00",
+        "description": "Czerwona róża to uniwersalny symbol głębokiej miłości, namiętności, pożądania i oddania, najczęściej kojarzony z wyznaniem \"kocham cię\", idealny na Walentynki, rocznice i inne romantyczne okazje, choć jej znaczenie może się różnić w zależności od liczby i kontekstu, symbolizując również podziw i silne zaangażowanie, podkreślając intensywność uczuć.",
+        "created_at": "2025-12-09T19:17:57.244Z",
+        "image": "flowers/34292495-7864-44c5-b94f-de6e241db942.png",
+        "in_stock": true,
+        "can_be_sold_separately": true
+    }
+},
+{
+    "model": "flowers.flower",
+    "pk": "71bdd850-a4e0-4543-af5f-99b430a7f1e8",
+    "fields": {
+        "name": "Róża pionowa",
+        "price": "15.00",
+        "description": "Róża pionowa, inaczej róża pienna (sztamowa, drzewko różane), to szlachetna odmiana róży zaszczepiona na wysokim pniu dzikiej podkładki, wyglądająca jak małe drzewko z burzą kwiatów u góry, idealna do donic, na tarasy i do ozdoby rabat, ale wymagająca dobrego zabezpieczenia na zimę. Tworzy elegancki, pionowy pokrój, często z zwisającą koroną, co jest bardzo dekoracyjne.",
+        "created_at": "2025-12-07T19:33:05.071Z",
+        "image": "flowers/f8c9641b-dece-471d-b83b-0bd4902f3bef.png",
+        "in_stock": true,
+        "can_be_sold_separately": true
+    }
+},
+{
+    "model": "flowers.flower",
+    "pk": "787b9346-58ce-4a74-89e3-66e1f914c266",
+    "fields": {
+        "name": "Różowa margaretka",
+        "price": "13.00",
+        "description": "Różowa margaretka to popularna odmiana rośliny ozdobnej z rodziny astrowatych, znanej jako złocień krzewiasty (Argyranthemum frutescens) lub po prostu margarytka, która w naturalnej formie jest biała, ale hodowcy stworzyli odmiany o różowych, czerwonawych lub fioletowych płatkach. Roślina ta ma dekoracyjne, pierzaste liście i obficie kwitnie latem, nadając się do ogrodów, na rabaty, a także do doniczek na balkony i tarasy, symbolizując sympatię i życzliwość, w przeciwieństwie do białej (czystość) czy żółtej (przyjaźń).",
+        "created_at": "2025-12-09T19:24:03.223Z",
+        "image": "flowers/06508f7c-cf6a-4281-a70d-052abb0cccfb.png",
+        "in_stock": true,
+        "can_be_sold_separately": true
+    }
+},
+{
+    "model": "flowers.flower",
+    "pk": "eda14803-cdbd-4c0b-ade8-93128eea7b84",
+    "fields": {
+        "name": "Eukaliptus",
+        "price": "5.00",
+        "description": "Eukaliptus to rodzaj wiecznie zielonych drzew i krzewów z rodziny mirtowatych, liczący ponad 700 gatunków, naturalnie występujących głównie w Australii. Jest on znany ze swoich aromatycznych liści, z których pozyskuje się olejek eukaliptusowy, ceniony za właściwości lecznicze. Roślina ta ma szerokie zastosowanie, m.in. w medycynie, kosmetyce, budownictwie i przemyśle meblarskim.",
+        "created_at": "2025-12-07T19:31:28.111Z",
+        "image": "flowers/9640ecba-fa3f-4a24-8e93-2193a19d3927.jpeg",
+        "in_stock": true,
+        "can_be_sold_separately": false
+    }
+},
+{
+    "model": "flowers.flower",
+    "pk": "f5e7de46-8665-4d1c-8126-392d6fced46d",
+    "fields": {
+        "name": "Różowa gerbera",
+        "price": "12.00",
+        "description": "Różowa gerbera to kwiat symbolizujący wdzięk, delikatność, radość i szczęście, często wręczany jako życzenia szybkiego powrotu do zdrowia lub wyraz subtelnych uczuć. Jest to popularna roślina z rodziny astrowatych, przypominająca stokrotkę, o dużych, promieniujących kwiatach w intensywnych kolorach, dostępna zarówno jako roślina doniczkowa, jak i cięty kwiat.",
+        "created_at": "2025-12-07T19:33:41.661Z",
+        "image": "flowers/5ff5b455-8736-4d3a-a1aa-d26ec9c38029.png",
+        "in_stock": true,
+        "can_be_sold_separately": true
+    }
+},
+{
+    "model": "flowers.flower",
+    "pk": "f7ce7de6-98c5-4762-9933-d2b1711f656d",
+    "fields": {
+        "name": "Tulipan biały",
+        "price": "12.00",
+        "description": "Tulipan biały to popularna roślina cebulowa, symbolizująca czystość, niewinność, nowe początki, szacunek, przebaczenie i współczucie, idealna na śluby, chrzty czy pogrzeby, a także do wiosennych bukietów i ogrodowych kompozycji, ceniona za elegancję i harmonię. Jest symbolem szlachetności, spokoju, szczerości i bezwarunkowej miłości, a w popkulturze (np. seriale) może oznaczać nadzieję na wybaczenie.",
+        "created_at": "2025-12-09T19:27:36.295Z",
+        "image": "flowers/ef4ffe5d-f95e-44e6-9594-e46be9946b5c.png",
+        "in_stock": true,
+        "can_be_sold_separately": true
+    }
+},
+{
+    "model": "flowers.bouquetcategory",
+    "pk": "2cdc2560-ea1c-4f14-b4c2-c452d99da2b8",
+    "fields": {
+        "name": "Dzikie kwiaty"
+    }
+},
+{
+    "model": "flowers.bouquetcategory",
+    "pk": "45f4b558-8f40-4208-b2ff-ce78689b61f6",
+    "fields": {
+        "name": "Róża"
+    }
+},
+{
+    "model": "flowers.bouquetcategory",
+    "pk": "5035b4ca-29f0-47f0-a10c-918581e69069",
+    "fields": {
+        "name": "Wybaczenie"
+    }
+},
+{
+    "model": "flowers.bouquetcategory",
+    "pk": "64f30a49-7006-438a-a1b3-a508334e0eb9",
+    "fields": {
+        "name": "Miłóść"
+    }
+},
+{
+    "model": "flowers.bouquetcategory",
+    "pk": "b94bea71-cb89-4c2c-be4a-5be92df29cb9",
+    "fields": {
+        "name": "Nowość"
+    }
+},
+{
+    "model": "flowers.bouquetcategory",
+    "pk": "cb74bf90-4dd1-4406-a0d6-b4a590f4469a",
+    "fields": {
+        "name": "Dzień kobiet"
+    }
+},
+{
+    "model": "flowers.bouquet",
+    "pk": "1b3aadbb-5678-4030-baab-0e972d8ae0f9",
+    "fields": {
+        "name": "Bukiet białych tulipanów \"Fashion\"",
+        "price": "260.00",
+        "description": "Bukiet “Fashion” składa się z białych tulipanów oraz eukaliptusu które niezmiennie uważane za symbol czystości, niewinności i delikatności.",
+        "created_at": "2025-12-09T19:28:44.428Z",
+        "image": "bouquets/bde850d2-06e4-413c-b1c0-2f7b22b5e251.png",
+        "categories": [
+            "cb74bf90-4dd1-4406-a0d6-b4a590f4469a",
+            "5035b4ca-29f0-47f0-a10c-918581e69069"
+        ]
+    }
+},
+{
+    "model": "flowers.bouquet",
+    "pk": "2b72eef5-9220-4ac0-be48-4e6a80b92ced",
+    "fields": {
+        "name": "Bukiet czerwonej róży \"Royal Kiss\"",
+        "price": "415.00",
+        "description": "Elegancki bukiet w odcieniach głębokiej czerwieni. Róże i storczyk– duet, który nigdy nie wychodzi z mody.\r\n\"Royal Kiss\" to klasa i uczucie w jednym.",
+        "created_at": "2025-12-09T19:18:52.518Z",
+        "image": "bouquets/0e1c4a42-a9eb-4427-a7db-42d642db1cb0.png",
+        "categories": [
+            "64f30a49-7006-438a-a1b3-a508334e0eb9",
+            "b94bea71-cb89-4c2c-be4a-5be92df29cb9",
+            "45f4b558-8f40-4208-b2ff-ce78689b61f6"
+        ]
+    }
+},
+{
+    "model": "flowers.bouquet",
+    "pk": "920fc992-de4b-4788-9eea-e630da04f1ce",
+    "fields": {
+        "name": "Bukiet z liliami \"Pink Poem\"",
+        "price": "465.00",
+        "description": "Bukiet „Pink Poem” to bukiet pełen subtelnych emocji i kobiecej elegancji.\r\nPołączenie białych lilii, różowych gerber, pięknych róż pioniowych i świeżego eukaliptusa tworzy harmonijną kompozycję, która zachwyca lekkością i klasą.",
+        "created_at": "2025-12-07T19:35:54.038Z",
+        "image": "bouquets/1a9a3eef-c729-4ae3-b96d-43e75927bc41.png",
+        "categories": [
+            "64f30a49-7006-438a-a1b3-a508334e0eb9",
+            "45f4b558-8f40-4208-b2ff-ce78689b61f6"
+        ]
+    }
+},
+{
+    "model": "flowers.bouquet",
+    "pk": "a349c620-51f8-44f6-a5a1-00f47251a294",
+    "fields": {
+        "name": "Bukiet \"Pink Raf\"",
+        "price": "300.00",
+        "description": "Delikatny i dziewczęcy bukiet „Pink Raf” z różowych margaretek to esencja świeżości i radości. Idealny na poprawę humoru, urodziny, podziękowania lub po prostu — bez okazji. Subtelne odcienie różu i lekka forma sprawiają, że bukiet pasuje do każdej chwili, którą chcesz uczynić wyjątkową.",
+        "created_at": "2025-12-09T19:24:51.552Z",
+        "image": "bouquets/add0757d-dcc6-42b8-8b3c-4619d0618d12.png",
+        "categories": [
+            "2cdc2560-ea1c-4f14-b4c2-c452d99da2b8",
+            "64f30a49-7006-438a-a1b3-a508334e0eb9"
+        ]
+    }
+},
+{
+    "model": "flowers.bouquetflower",
+    "pk": 1,
+    "fields": {
+        "bouquet": "920fc992-de4b-4788-9eea-e630da04f1ce",
+        "flower": "f5e7de46-8665-4d1c-8126-392d6fced46d",
+        "quantity": 10
+    }
+},
+{
+    "model": "flowers.bouquetflower",
+    "pk": 2,
+    "fields": {
+        "bouquet": "920fc992-de4b-4788-9eea-e630da04f1ce",
+        "flower": "056f7e14-f035-40d2-a83a-60f455afc35f",
+        "quantity": 6
+    }
+},
+{
+    "model": "flowers.bouquetflower",
+    "pk": 3,
+    "fields": {
+        "bouquet": "920fc992-de4b-4788-9eea-e630da04f1ce",
+        "flower": "71bdd850-a4e0-4543-af5f-99b430a7f1e8",
+        "quantity": 10
+    }
+},
+{
+    "model": "flowers.bouquetflower",
+    "pk": 4,
+    "fields": {
+        "bouquet": "920fc992-de4b-4788-9eea-e630da04f1ce",
+        "flower": "eda14803-cdbd-4c0b-ade8-93128eea7b84",
+        "quantity": 1
+    }
+},
+{
+    "model": "flowers.bouquetflower",
+    "pk": 5,
+    "fields": {
+        "bouquet": "2b72eef5-9220-4ac0-be48-4e6a80b92ced",
+        "flower": "3550bedc-bb70-469a-87cc-f5683476372c",
+        "quantity": 25
+    }
+},
+{
+    "model": "flowers.bouquetflower",
+    "pk": 6,
+    "fields": {
+        "bouquet": "a349c620-51f8-44f6-a5a1-00f47251a294",
+        "flower": "787b9346-58ce-4a74-89e3-66e1f914c266",
+        "quantity": 15
+    }
+},
+{
+    "model": "flowers.bouquetflower",
+    "pk": 7,
+    "fields": {
+        "bouquet": "1b3aadbb-5678-4030-baab-0e972d8ae0f9",
+        "flower": "f7ce7de6-98c5-4762-9933-d2b1711f656d",
+        "quantity": 25
+    }
+},
+{
+    "model": "orders.order",
+    "pk": "e987f624-9c9e-4534-b071-dffbb5bc0594",
+    "fields": {
+        "user": "c24a0662-8656-45d9-b66b-4db56ced62a9",
+        "status": "paid",
+        "delivery_method": "courier",
+        "notes": null,
+        "address_line1": "gospodarcza",
+        "address_line2": null,
+        "city": "lublin",
+        "postal_code": "16-743",
+        "created_at": "2025-12-13T14:55:00.203Z",
+        "updated_at": "2025-12-13T15:17:42.958Z"
+    }
+},
+{
+    "model": "orders.orderitem",
+    "pk": "085805f6-740c-4cad-8965-289cc811f2e5",
+    "fields": {
+        "order": "e987f624-9c9e-4534-b071-dffbb5bc0594",
+        "flower": null,
+        "bouquet": "1b3aadbb-5678-4030-baab-0e972d8ae0f9",
+        "quantity": 3
+    }
+},
+{
+    "model": "orders.payment",
+    "pk": 1,
+    "fields": {
+        "order": "e987f624-9c9e-4534-b071-dffbb5bc0594",
+        "method": "blik",
+        "status": "completed",
+        "created_at": "2025-12-13T15:18:02.536Z",
+        "completed_at": "2025-12-13T15:18:02.536Z"
+    }
+}
+]

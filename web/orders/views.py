@@ -10,7 +10,12 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from orders.models import Order, OrderItem
-from orders.serializers import OrderItemSerializer, OrderSerializer, PaymentSerializer
+from orders.serializers import (
+    OrderItemDetailSerializer,
+    OrderItemListSerializer,
+    OrderSerializer,
+    PaymentSerializer,
+)
 from orders.services import complete_order_payment
 
 
@@ -47,7 +52,7 @@ class OrderDetailAPIView(RetrieveUpdateDestroyAPIView):
 
 class OrderItemListAPIView(ListCreateAPIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = OrderItemSerializer
+    serializer_class = OrderItemListSerializer
 
     def get_queryset(self):  # type: ignore
         order_id = self.kwargs.get("order_id")
@@ -68,7 +73,7 @@ class OrderItemListAPIView(ListCreateAPIView):
 
 class OrderItemDetailAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = OrderItemSerializer
+    serializer_class = OrderItemDetailSerializer
     http_method_names = ["get", "patch", "delete"]
 
     def get_queryset(self):  # type: ignore
