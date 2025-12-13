@@ -1,10 +1,24 @@
 services:
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./web/static:/home/app/web/static
+    depends_on:
+      - web
+
   web:
     container_name: web
     build:
       context: ./web
       dockerfile: Dockerfile
     image: web-local:latest
+    env_file:
+      - .env
     volumes:
       - ./web:/home/app/web
     command:
@@ -12,9 +26,27 @@ services:
       - -c
       - |
         python manage.py migrate --no-input
-        python manage.py runserver 0.0.0.0:80
-    ports:
-      - "80:80"
+        python manage.py collectstatic --no-input &&
+        gunicorn core.wsgi:application --bind 0.0.0.0:8000 --workers 3
+      # python manage.py runserver 0.0.0.0:80
+    depends_on:
+      - db
+    expose:
+      - "8000"
+
+  db:
+    container_name: postgres
+    image: postgres:15
     env_file:
       - .env
-    restart: "no"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

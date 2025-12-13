@@ -11,4 +11,7 @@ RUN apt-get -y install gettext
 
 COPY ./requirements.txt .
 RUN pip install --default-timeout=500 --no-cache-dir -r requirements.txt
+
 COPY . .
+
+RUN mkdir -p /home/app/web/static
