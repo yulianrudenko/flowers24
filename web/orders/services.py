@@ -35,8 +35,8 @@ def create_order_item(**validated_data: dict[str, Any]) -> OrderItem:
 
 @transaction.atomic
 def complete_order_payment(
-    order: Order, payment_methd: Payment.Method
-) -> Payment | None:
+    order: Order, payment_method: Payment.Method
+) -> Payment:
     if order.status != Order.Status.WAITING_PAYMENT:
         raise ValidationError(
             {"detail": _("Order is already paid or cannot be paid")}
@@ -54,7 +54,7 @@ def complete_order_payment(
 
     payment = Payment.objects.create(
         order=order,
-        method=payment_methd,
+        method=payment_method,
         status=Payment.Status.COMPLETED,
         completed_at=timezone.now(),
     )

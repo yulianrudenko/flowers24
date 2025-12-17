@@ -50,6 +50,8 @@ class Order(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    from django.db.models import QuerySet
+    items: QuerySet["Order"]
 
     class Meta:
         verbose_name = _("Order")

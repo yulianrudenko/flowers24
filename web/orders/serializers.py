@@ -100,6 +100,15 @@ class OrderItemDetailSerializer(BaseOrderItemSerializer):
 
         return attrs
 
+    def update(self, instance: OrderItem, validated_data):
+        if instance.order.status not in [
+            Order.Status.WAITING_PAYMENT,
+            Order.Status.PAID,
+            Order.Status.PREPARING,
+        ]:
+            return
+        return super().update(instance, validated_data)
+
 
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemDetailSerializer(many=True, read_only=True)
